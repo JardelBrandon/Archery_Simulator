@@ -5,7 +5,7 @@ import java.awt.*;//criação dos layouts
 //quando se extende a classe da biblioteca, não é necessário ficar rechamando a referência( que nesse caso seria frame)
 public class Janela1 extends JFrame {
     //construtor
-    public Janela(){
+    public Janela1(){
         //colocar um titulo a janela
         super("Primeira Janela");
 
@@ -32,6 +32,6 @@ public class Janela1 extends JFrame {
         setVisible(true);
     }
     public static void main(String[] args){
-        new Janela();
+        new Janela1();
     }
 }
