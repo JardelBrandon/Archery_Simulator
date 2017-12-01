@@ -1,9 +1,9 @@
-//bibliotecas
+﻿//bibliotecas
 import javax.swing.*;
 import java.awt.*;//criação dos layouts
 
 //quando se extende a classe da biblioteca, não é necessário ficar rechamando a referência( que nesse caso seria frame)
-public class Janela extends JFrame {
+public class Janela1 extends JFrame {
     //construtor
     public Janela(){
         //colocar um titulo a janela
