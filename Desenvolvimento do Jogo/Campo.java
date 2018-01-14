@@ -1,4 +1,4 @@
-
+import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,12 +31,31 @@ public class Campo extends JPanel implements ActionListener{
 
         graficos.drawImage(campo, 0, 0, null);
 
-        graficos.drawImage(arco.getImagem1(), arco.getX(), arco.getY(), this);
+        graficos.drawImage(arco.getImagemAcao(), arco.getX(), arco.getY(), this);
+
+        List<Flecha> flechas = arco.getFlechas();
+        for(int i = 0; i < flechas.size(); i++){
+            Flecha f = (Flecha) flechas.get(i);
+            graficos.drawImage(f.getImagem(), f.getX(), f.getY(), this);
+        }
 
         g.dispose();
     }
 
     public void actionPerformed(ActionEvent arg0){
+
+        List<Flecha> flechas = arco.getFlechas();
+
+        for(int i = 0; i < flechas.size(); i++){
+            Flecha f = (Flecha) flechas.get(i);
+            if(f.isVisible()){
+                f.mexer();
+            }
+            else{
+                flechas.remove(i);
+            }
+        }
+
         repaint();
     }
     private class TecladoAdapter extends KeyAdapter{
