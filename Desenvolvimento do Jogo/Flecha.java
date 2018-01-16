@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Flecha {
 
-    private Image imagem;
+    private Image imagem_1;
     private int x, y;
     private int altura, largura;
     private boolean isVisible;
@@ -19,10 +19,10 @@ public class Flecha {
         this.y = y;
 
         ImageIcon flecha = new ImageIcon("images\\flecha.png");
-        imagem = flecha.getImage();
+        imagem_1 = flecha.getImage();
 
-        this.altura = imagem.getHeight(null);
-        this.largura = imagem.getWidth(null);
+        this.altura = imagem_1.getHeight(null);
+        this.largura = imagem_1.getWidth(null);
 
         isVisible = true;
 
@@ -33,6 +33,7 @@ public class Flecha {
             isVisible = false;
         }
     }
+
     public boolean isVisible(){
         return isVisible;
     }
@@ -40,7 +41,7 @@ public class Flecha {
         this.isVisible = isVisible;
     }
     public Image getImagem(){
-        return imagem;
+        return imagem_1;
     }
     public int getX(){
         return x;
@@ -48,5 +49,4 @@ public class Flecha {
     public int getY(){
         return y;
     }
-
 }

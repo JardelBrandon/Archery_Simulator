@@ -39,10 +39,28 @@ public class Campo extends JPanel implements ActionListener{
             graficos.drawImage(f.getImagem(), f.getX(), f.getY(), this);
         }
 
+        List<FlechaCima> flechaCimas = arco.getFlechasCima();
+        for(int i = 0; i < flechaCimas.size(); i++){
+            FlechaCima fc = (FlechaCima) flechaCimas.get(i);
+            graficos.drawImage(fc.getImagem_2(), fc.getX(), fc.getY(), this);
+        }
+
         g.dispose();
     }
 
     public void actionPerformed(ActionEvent arg0){
+
+        List<FlechaCima> flechaCimas = arco.getFlechasCima();
+
+        for(int i = 0; i < flechaCimas.size(); i++){
+            FlechaCima fc = (FlechaCima) flechaCimas.get(i);
+            if(fc.isVisibleCima()){
+                fc.mexerCima();
+            }
+            else{
+                flechaCimas.remove(i);
+            }
+        }
 
         List<Flecha> flechas = arco.getFlechas();
 
@@ -55,7 +73,6 @@ public class Campo extends JPanel implements ActionListener{
                 flechas.remove(i);
             }
         }
-
         repaint();
     }
     private class TecladoAdapter extends KeyAdapter{
