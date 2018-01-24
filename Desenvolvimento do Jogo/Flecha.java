@@ -3,12 +3,13 @@ import java.awt.*;
 
 public class Flecha {
 	
-	private Image imagem;
+	private Image imagem, imagem2;
     private int x, y;
     private int altura, largura;
+    //private int altura_baixo, largura_baixo;
     private boolean isVisible;
     private static final int LARGURA_TELA = 1425;
-    //obs.: mudar esta constante quando for implementar a força do arco
+    private static final int ALTURA_TELA = 629;    
     private int contador_forca;       
 
     public Flecha(int x, int y, int forca){
@@ -20,9 +21,12 @@ public class Flecha {
 
         ImageIcon flecha = new ImageIcon("images\\flecha.png");
         imagem = flecha.getImage();
+        
+        /*ImageIcon flecha_baixo = new ImageIcon("images\\Flecha_baixo.png");
+        imagem2 = flecha_baixo.getImage();*/
 
         this.altura = imagem.getHeight(null);
-        this.largura = imagem.getWidth(null);
+        this.largura = imagem.getWidth(null);        
 
         isVisible = true;
 
@@ -33,10 +37,24 @@ public class Flecha {
     		contador_forca = 10;
     	}
         this.x += contador_forca;
-        System.out.println(contador_forca);
+        //System.out.println(contador_forca);
         if(this.x > LARGURA_TELA){
             isVisible = false;
-        }
+        }        
+    }
+    //obs.: Ver esse metodo para que em certo tempo ou distancia a flecha começe a descer
+    public void mexer_baixo() {
+    	if(contador_forca > 10) {
+    		contador_forca = 10;
+    	}
+    	this.x += contador_forca;
+    	if(this.x > LARGURA_TELA) {
+    		isVisible = false;
+    	}
+    	this.y += contador_forca/2;
+    	if(this.y > ALTURA_TELA) {
+    		isVisible = false;
+    	}
     }
 
     public boolean isVisible(){
@@ -48,11 +66,17 @@ public class Flecha {
     public Image getImagem(){
         return imagem;
     }
+    public Image getImagem2() {
+    	return imagem2;
+    }
     public int getX(){
         return x;
     }
     public int getY(){
         return y;
+    }
+    public int getContadorForca() {
+    	return contador_forca;
     }
 
 }

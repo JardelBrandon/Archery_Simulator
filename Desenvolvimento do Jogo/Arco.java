@@ -96,16 +96,18 @@ public class Arco {
             imagem_acao = imagem1;
         }
         
+        if (codigo == KeyEvent.VK_SPACE) {
+        	contador_pressionado += 1;
+        }
+        
         if (imagem_acao == imagem1_cima) {
         	if (codigo == KeyEvent.VK_SPACE) {
-        		contador_pressionado += 1;
         		imagem_acao = imagem2_cima;            	                
             }        	
         }
         
-        if(imagem_acao == imagem1) {
-        	if(codigo == KeyEvent.VK_SPACE) {
-        		contador_pressionado += 1;
+        if (imagem_acao == imagem1) {
+        	if(codigo == KeyEvent.VK_SPACE) {       		
         		imagem_acao = imagem2;        		 
         	}        	               
         }

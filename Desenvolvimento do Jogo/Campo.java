@@ -68,6 +68,9 @@ public class Campo extends JPanel implements ActionListener {
             Flecha f = (Flecha) flechas.get(i);
             if(f.isVisible()){
                 f.mexer();
+                /*if(f.getX() == 500) {
+                	f.mexer_baixo();
+                }*/
             }
             else{
                 flechas.remove(i);
