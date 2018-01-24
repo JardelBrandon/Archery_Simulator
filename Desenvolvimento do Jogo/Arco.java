@@ -11,6 +11,7 @@ public class Arco {
     private int altura, largura;
     private boolean isVisible;
     private int contador_forca = 0;
+    private int contador_pressionado = 0;
 
     private List<Flecha> flechas;
 
@@ -79,70 +80,69 @@ public class Arco {
     }
 
     public void atira(){
-        this.flechas.add(new Flecha(x + largura, y + altura/2));
+        this.flechas.add(new Flecha(x + largura, y + altura/2, contador_forca));
     }
     public void atiraCima(){
-        this.flechas_cima.add(new FlechaCima(x + largura, y + altura/2));
+        this.flechas_cima.add(new FlechaCima(x + largura, y + altura/2, contador_forca));
     }    
 
     public void keyPressed(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 
         if(codigo == KeyEvent.VK_UP){           
-           imagem_acao = imagem1_cima;
-        }
+           imagem_acao = imagem1_cima;           
+        }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
         }
-
+        
         if (imagem_acao == imagem1_cima) {
-            if (codigo == KeyEvent.VK_SPACE) {
-            	contador_forca += 1;
-            	//System.out.println(contador_forca);
-                imagem_acao = imagem2_cima;
-            }
+        	if (codigo == KeyEvent.VK_SPACE) {
+        		contador_pressionado += 1;
+        		imagem_acao = imagem2_cima;            	                
+            }        	
         }
-        else {
-            if (codigo == KeyEvent.VK_SPACE) {
-            	contador_forca += 1;
-            	//System.out.println(contador_forca);
-                imagem_acao = imagem2;
-            }
+        
+        if(imagem_acao == imagem1) {
+        	if(codigo == KeyEvent.VK_SPACE) {
+        		contador_pressionado += 1;
+        		imagem_acao = imagem2;        		 
+        	}        	               
         }
-
     }
+
+    
     public void keyReleased(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 
         if(codigo == KeyEvent.VK_UP){
-            imagem_acao = imagem1_cima;
-        }
+            imagem_acao = imagem1_cima;            
+        }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
         }
-
-        if (imagem_acao == imagem2_cima) {
-            if (codigo == KeyEvent.VK_SPACE) {
-                atiraCima();
-                imagem_acao = imagem1_cima;
-
-            }
+        
+        if(imagem_acao == imagem2_cima) {
+        	if(codigo == KeyEvent.VK_SPACE) {        		
+        		contador_forca = contador_pressionado;
+        		atiraCima();
+        		imagem_acao = imagem1_cima;
+        		contador_pressionado = 0;        		
+        	}        	
         }
-        else {
-            if (codigo == KeyEvent.VK_SPACE) {
-            	contador_forca += 1;
-                imagem_acao = imagem1;
-                atira();
-            }
-        }
+        if(imagem_acao == imagem2) {
+        	if(codigo == KeyEvent.VK_SPACE) {        		
+        		contador_forca = contador_pressionado;
+        		imagem_acao = imagem1;
+        		atira();        		
+        		contador_pressionado = 0;
+        	}    		        		       		
+    	}
     }
     
     public int getContadorForca() {
     	return contador_forca;
-    }
+    }   
     
-    public void setContadorForca(int contador_forca) {
-    	this.contador_forca = contador_forca;
-    }
 
 }

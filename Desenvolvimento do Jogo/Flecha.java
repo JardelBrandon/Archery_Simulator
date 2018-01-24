@@ -9,16 +9,14 @@ public class Flecha {
     private boolean isVisible;
     private static final int LARGURA_TELA = 1425;
     //obs.: mudar esta constante quando for implementar a força do arco
-    //private int contador_forca;
-    
-    private Arco arco;
-    
-    private static final int VELOCIDADE = 2;   
+    private int contador_forca;       
 
-    public Flecha(int x, int y){
+    public Flecha(int x, int y, int forca){
 
         this.x = x;
         this.y = y;
+        this.contador_forca = forca;
+        
 
         ImageIcon flecha = new ImageIcon("images\\flecha.png");
         imagem = flecha.getImage();
@@ -31,13 +29,11 @@ public class Flecha {
     }    
     
     public void mexer(){
-    	
-    	//apartir da força definir a velocidade do tiro
-    	/*arco = new Arco();
-    	velocidade = arco.getContadorForca();*/
-    	
-        this.x += VELOCIDADE;
-        System.out.println(VELOCIDADE);
+    	if(contador_forca > 10) {
+    		contador_forca = 10;
+    	}
+        this.x += contador_forca;
+        System.out.println(contador_forca);
         if(this.x > LARGURA_TELA){
             isVisible = false;
         }
