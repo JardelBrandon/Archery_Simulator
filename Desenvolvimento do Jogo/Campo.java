@@ -17,7 +17,7 @@ public class Campo extends JPanel implements ActionListener {
         setDoubleBuffered(true);
         addKeyListener(new TecladoAdapter());
 
-        ImageIcon image_fundo = new ImageIcon("images\\camp.jpg");
+        ImageIcon image_fundo = new ImageIcon("images\\campo.png");
         campo = image_fundo.getImage();
 
         arco = new Arco();
@@ -67,10 +67,7 @@ public class Campo extends JPanel implements ActionListener {
         for(int i = 0; i < flechas.size(); i++){
             Flecha f = (Flecha) flechas.get(i);
             if(f.isVisible()){
-                f.mexer();
-                /*if(f.getX() == 500) {
-                	f.mexer_baixo();
-                }*/
+                f.mexer();                
             }
             else{
                 flechas.remove(i);

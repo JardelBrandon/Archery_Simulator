@@ -8,8 +8,8 @@ public class Flecha {
     private int altura, largura;
     //private int altura_baixo, largura_baixo;
     private boolean isVisible;
-    private static final int LARGURA_TELA = 1425;
-    private static final int ALTURA_TELA = 629;    
+    private static final int LARGURA_TELA = 1571;
+    private static final int ALTURA_TELA = 1000;    
     private int contador_forca;       
 
     public Flecha(int x, int y, int forca){
@@ -41,21 +41,7 @@ public class Flecha {
         if(this.x > LARGURA_TELA){
             isVisible = false;
         }        
-    }
-    //obs.: Ver esse metodo para que em certo tempo ou distancia a flecha começe a descer
-    public void mexer_baixo() {
-    	if(contador_forca > 10) {
-    		contador_forca = 10;
-    	}
-    	this.x += contador_forca;
-    	if(this.x > LARGURA_TELA) {
-    		isVisible = false;
-    	}
-    	this.y += contador_forca/2;
-    	if(this.y > ALTURA_TELA) {
-    		isVisible = false;
-    	}
-    }
+    }    
 
     public boolean isVisible(){
         return isVisible;

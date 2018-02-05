@@ -5,18 +5,15 @@ public class GameContainer extends JFrame{
 	
 	public GameContainer(){
         add(new Campo());
-        setSize(1425,629);
+        setSize(1571,1000);
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {		
 		new GameContainer();
-		
-
 	}
 
 }

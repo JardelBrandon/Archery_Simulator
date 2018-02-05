@@ -12,6 +12,8 @@ public class Arco {
     private boolean isVisible;
     private int contador_forca = 0;
     private int contador_pressionado = 0;
+    private int contador_cima = 0;
+    private int contador_pressionado_cima = 0;
 
     private List<Flecha> flechas;
 
@@ -42,7 +44,7 @@ public class Arco {
         flechas_cima = new ArrayList<FlechaCima>();
 
         this.x = 100;
-        this.y = 200;
+        this.y = 500;
     }
     public List<Flecha> getFlechas(){
         return flechas;
@@ -83,17 +85,19 @@ public class Arco {
         this.flechas.add(new Flecha(x + largura, y + altura/2, contador_forca));
     }
     public void atiraCima(){
-        this.flechas_cima.add(new FlechaCima(x + largura, y + altura/2, contador_forca));
+        this.flechas_cima.add(new FlechaCima(x + largura, y + altura/2, contador_forca, contador_cima));
     }    
 
     public void keyPressed(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 
         if(codigo == KeyEvent.VK_UP){           
-           imagem_acao = imagem1_cima;           
+           imagem_acao = imagem1_cima;
+           contador_pressionado_cima += 1;
         }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
+            contador_pressionado_cima = 0;
         }
         
         if (codigo == KeyEvent.VK_SPACE) {
@@ -102,7 +106,7 @@ public class Arco {
         
         if (imagem_acao == imagem1_cima) {
         	if (codigo == KeyEvent.VK_SPACE) {
-        		imagem_acao = imagem2_cima;            	                
+        		imagem_acao = imagem2_cima;        		
             }        	
         }
         
@@ -110,7 +114,7 @@ public class Arco {
         	if(codigo == KeyEvent.VK_SPACE) {       		
         		imagem_acao = imagem2;        		 
         	}        	               
-        }
+        }        
     }
 
     
@@ -118,10 +122,13 @@ public class Arco {
         int codigo = tecla.getKeyCode();
 
         if(codigo == KeyEvent.VK_UP){
-            imagem_acao = imagem1_cima;            
+            imagem_acao = imagem1_cima;
+            contador_cima = contador_pressionado_cima;
+            System.out.println(contador_cima);
         }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
+            contador_cima = contador_pressionado_cima;
         }
         
         if(imagem_acao == imagem2_cima) {
@@ -129,7 +136,8 @@ public class Arco {
         		contador_forca = contador_pressionado;
         		atiraCima();
         		imagem_acao = imagem1_cima;
-        		contador_pressionado = 0;        		
+        		contador_pressionado = 0;
+        		contador_pressionado_cima = 0;
         	}        	
         }
         if(imagem_acao == imagem2) {
@@ -139,12 +147,7 @@ public class Arco {
         		atira();        		
         		contador_pressionado = 0;
         	}    		        		       		
-    	}
-    }
-    
-    public int getContadorForca() {
-    	return contador_forca;
-    }   
-    
+    	}       
+    }  
 
 }

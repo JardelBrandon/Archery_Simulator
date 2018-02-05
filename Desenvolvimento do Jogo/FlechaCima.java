@@ -8,17 +8,20 @@ public class FlechaCima {
     private int x, y;
     private int altura_cima, largura_cima;
     private boolean isVisibleCima;
-    private static final int LARGURA_TELA = 1425;
-    private static final int ALTURA_TELA = 629;
+    private static final int LARGURA_TELA = 1571;
+    private static final int ALTURA_TELA = 1000;
     //obs.: mudar esta constante quando for implementar a força do arco
     private int contador_forca;
+    private int contador_cima;
+    private static final int ALTURA_FIGURA = 196;
     
 
-    public FlechaCima(int x, int y, int forca){
+    public FlechaCima(int x, int y, int forca, int cima){
     	//necessario para pegar as informacoes da posicao da imagem e do contador quando se aperta barra de espaco
         this.x = x;
         this.y = y;
         this.contador_forca = forca;
+        this.contador_cima = cima;
 
         ImageIcon flecha_cima = new ImageIcon("images\\flecha_cima.png");
         imagem = flecha_cima.getImage();
@@ -29,7 +32,8 @@ public class FlechaCima {
 
         isVisibleCima = true;        
 
-    }
+    }    
+    
     public Image getImagem(){
         return imagem;
     }
@@ -50,9 +54,17 @@ public class FlechaCima {
     	if(contador_forca > 10) {
     		contador_forca = 10;
     	}
-        this.x += contador_forca;
-        this.y -= contador_forca;
-        System.out.println(contador_forca);
+    	if(contador_cima > 10) {
+    		contador_cima = 10;
+    	}
+        this.x += contador_forca;        
+        
+        if(this.y < contador_cima + ALTURA_FIGURA) {        	
+        	this.y += contador_cima;
+        }
+        
+        this.y -= contador_cima;
+               
         if(this.x > LARGURA_TELA){
             isVisibleCima = false;
         }        
