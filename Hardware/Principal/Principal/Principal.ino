@@ -2,6 +2,11 @@
 
 #include "MPU6050_6Axis_MotionApps20.h" // Inclui a biblioteca MPU6050_6Axis_MotionApps20 (Configuração do modo escolhido para setup no MPU6050)
 
+// --- Mapeamento de Hardware ---
+/* Rotary encoder read example */
+#define ENC_A 8
+#define ENC_B 9
+#define ENC_PORT PINB
 
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE //Implementa se necessário uma comunicação para o arduino com o protocolo I2C incluindo-se a biblioteca Wire
     #include "Wire.h" // Inclui biblioteca Wire (Comunicação do arduino com o protocolo I2C)
@@ -9,10 +14,6 @@
 
 
 #define LOG_INPUT 1 // Define a constante LOG_INPUT, se for diferente de 0 imprime no serial os valores obtidos pelo giroscópio; se for 0 não imprime 
-#define MANUAL_TUNING 0 // Define a constante MANUAL_TUNING, se for diferente de 0 a configuração do PID se dar por forma manual (Através dos potenciômetros); se for 0 usa o PID pré-definido  
-#define LOG_PID_CONSTANTS 0 //Define a constante LOG_PID_CONSTANTS, se for diferente de 0 imprime no serial os valores manuiais obtidos de Kp, Ki e Kd; se for 0 não imprime  
-#define MOVE_BACK_FORTH 0 // Define a constante MOVE_BACK_FORTH, se for diferente de 0, a função é invocada e aumenta e diminua do setpoint valor de movingAngleOffset a cada 5 segundos, se for 0 não invoca a função  
-#define MIN_ABS_SPEED 30 // Define a constante MIN_ABS_SPEED, que será o menor valor de velocidade para os motores 
 
 // MPU
 
@@ -32,21 +33,17 @@ Quaternion q;           // [w, x, y, z]         Recipiente quaternion
 VectorFloat gravity;    // [x, y, z]            Vetor gravidade
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll Recipiente e vetor gravidade (ypr[3] é igual a 3 pois usamos o valor de roll)
 
-
 // Temporizadores
+
+
 long time1Hz = 0; // Define time1Hz como sendo do tipo long 
+
 
 volatile bool mpuInterrupt = false;     // indica se o pino de interrupção do MPU6050 foi alto (HIGH)
 void dmpDataReady() // Define a função dmpDataReady para verificação de inicialização do DMP (Digital Motion Processor)
 {
     mpuInterrupt = true; // Análisa se houve interrupção do MPU6050 se sim recebe True 
 }
-
-// --- Mapeamento de Hardware ---
-/* Rotary encoder read example */
-#define ENC_A 8
-#define ENC_B 9
-#define ENC_PORT PINB
 
 
 void setup() //Função de configuração do setup para inicialização no arduino
@@ -56,9 +53,7 @@ void setup() //Função de configuração do setup para inicialização no ardui
     digitalWrite(ENC_A, HIGH);
     pinMode(ENC_B, INPUT);
     digitalWrite(ENC_B, HIGH);
-    //Serial.begin (9600);
-    Serial.println("Start");
-    /*Rotary Encoder*/
+    //Rotary Encoder
     
     // aderir ao barramento I2C (a biblioteca I2Cdev não faz isso automaticamente)
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE  // Verifica se a implementação da comunicação I2Cdev com o arduino é compatível com as funções I2CDEV_ARDUINO_WIRE
@@ -120,25 +115,18 @@ void setup() //Função de configuração do setup para inicialização no ardui
 
 void loop()  //Função de configuração do loop de repetição do arduino
 {
-    //Rotary Encoder
     static unsigned char counter = 0; //this variable will be changed by encoder input
     char tmpdata;
     /**/
     tmpdata = read_encoder();
-    if( tmpdata ) {
-        Serial.print("Counter value: ");
-        Serial.print(counter, DEC);
-        
-        counter += tmpdata;
-    }
-    //Rotary Encoder
+    counter += tmpdata;
     
     // se a programação de configuração falhou, não realiza nada do loop
     if (!dmpReady) return;
 
     // aguarde interrupção do MPU com pacote(s) extra disponível
     while (!mpuInterrupt && fifoCount < packetSize)
-    {
+    {   
         unsigned long currentMillis = millis(); // Define currentMillis como sendo do tipo unsigned long, que recebe os milisegundos de cada loop 
         
         if (currentMillis - time1Hz >= 1000) // Se o tempo de currentMillis menos o tempo de time1Hz for menor ou igual a 1000 realiza o código abaixo 
@@ -146,6 +134,7 @@ void loop()  //Função de configuração do loop de repetição do arduino
             loopAt1Hz(); // Invoca a função loopAt1Hz que está definida próxima ao final do código 
             time1Hz = currentMillis; // Define que a variável time1Hz é igual a variável currentMillis (De 1000 em 1000 "A cada segundo")
         }
+    }
 
     // redefini o sinalizador de interrupção e obtém o valor do byte INT_STATUS
     mpuInterrupt = false; // A variável mpuInterrupt recebe Falso para redefinição  
@@ -179,23 +168,16 @@ void loop()  //Função de configuração do loop de repetição do arduino
         mpu.dmpGetGravity(&gravity, &q); // Lê os valores da gravidade do MPU6050 obtidos pelo DMP e com uma ordem FIFO 
         mpu.dmpGetYawPitchRoll(ypr, &q, &gravity); // Lê os valores de Yaw, Pitch e Roll do MPU6050 obtidos pelo DMP e com uma ordem FIFO 
         #if LOG_INPUT // Se a constante LOG_INPUT da Macro decisão for diferente de 0 imprime no Serial os valores de Yaw, Pitch e Roll obtidos pelo MPU6050, Se for igual a 0 não imprime 
-            Serial.print("ypr\t"); // Imprime no Serial, "ypr" (Que significa Yaw, Pitch e Roll, respectivamente do MPU6050)
-            Serial.print(ypr[0] * 180/M_PI); // Imprime no Serial, o valor de Yaw 
-            Serial.print("\t"); // Imprime um espaçamento de tabulação (tab)
+            Serial.print("Giroscópio: "); // Imprime no Serial, "ypr" (Que significa Yaw, Pitch e Roll, respectivamente do MPU6050)
+            //Serial.print(ypr[0] * 180/M_PI); // Imprime no Serial, o valor de Yaw 
+            //Serial.print("\t"); // Imprime um espaçamento de tabulação (tab)
             Serial.print(ypr[1] * 180/M_PI); // Imprime no Serial, o valor de Pitch
-            Serial.print("\t"); // Imprime um espaçamento de tabulação (tab)
-            Serial.println(ypr[2] * 180/M_PI); // Imprime no Serial, o valor de Roll
+            Serial.print("\t\t"); // Imprime um espaçamento de tabulação (tab)
+            //Serial.print(ypr[2] * 180/M_PI); // Imprime no Serial, o valor de Roll
+            Serial.print("Rotary Encoder: ");
+            Serial.println(counter, DEC);
         #endif // Encerra a Macro condição
-    }
    }
-}
-
-
-void loopAt1Hz() // Define a função loopAt1Hz (É realizada a cada segundo)
-{
-#if MANUAL_TUNING // Se a constante MANUAL_TUNING for diferente de 0, é realizado o comando abaixo
-    setPIDTuningValues(); // Define os valores do Kp, Ki e Kd do PID, que podem ser definidos pelos potenciômetros
-#endif // Encerra a Macro condição 
 }
 
 /* returns change in encoder state (-1,0,1) */
@@ -208,6 +190,7 @@ char read_encoder()
   old_AB |= ( ENC_PORT & 0x03 );  //add current state
   return ( enc_states[( old_AB & 0x0f )]);
 }
-//Rotary Encoder
 
-
+void loopAt1Hz() // Define a função loopAt1Hz (É realizada a cada segundo)
+{
+}
