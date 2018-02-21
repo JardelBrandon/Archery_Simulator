@@ -5,6 +5,8 @@
  */
 package supervisorio;
 
+import serial.SerialRxTx;
+
 /**
  *
  * @author jarde
@@ -15,7 +17,15 @@ public class Supervisorio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        SerialRxTx serial = new SerialRxTx();
+        
+        if (serial.iniciaSerial()) {
+            while (true) {
+                
+            }
+        } else {
+            
+        }
     }
     
 }
