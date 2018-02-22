@@ -33,6 +33,10 @@ Quaternion q;           // [w, x, y, z]         Recipiente quaternion
 VectorFloat gravity;    // [x, y, z]            Vetor gravidade
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll Recipiente e vetor gravidade (ypr[3] é igual a 3 pois usamos o valor de roll)
 
+//Strings constantes 
+String tipoDado = "$STS";
+String separador = ",";
+
 // Temporizadores
 
 
@@ -168,13 +172,16 @@ void loop()  //Função de configuração do loop de repetição do arduino
         mpu.dmpGetGravity(&gravity, &q); // Lê os valores da gravidade do MPU6050 obtidos pelo DMP e com uma ordem FIFO 
         mpu.dmpGetYawPitchRoll(ypr, &q, &gravity); // Lê os valores de Yaw, Pitch e Roll do MPU6050 obtidos pelo DMP e com uma ordem FIFO 
         #if LOG_INPUT // Se a constante LOG_INPUT da Macro decisão for diferente de 0 imprime no Serial os valores de Yaw, Pitch e Roll obtidos pelo MPU6050, Se for igual a 0 não imprime 
-            Serial.print("Giroscópio: "); // Imprime no Serial, "ypr" (Que significa Yaw, Pitch e Roll, respectivamente do MPU6050)
+            Serial.print(tipoDado);
+            Serial.print(separador);
+            //Serial.print("Giroscópio: "); // Imprime no Serial, "ypr" (Que significa Yaw, Pitch e Roll, respectivamente do MPU6050)
             //Serial.print(ypr[0] * 180/M_PI); // Imprime no Serial, o valor de Yaw 
             //Serial.print("\t"); // Imprime um espaçamento de tabulação (tab)
             Serial.print(ypr[1] * 180/M_PI); // Imprime no Serial, o valor de Pitch
-            Serial.print("\t\t"); // Imprime um espaçamento de tabulação (tab)
+            Serial.print(separador);
+            //Serial.print("\t\t"); // Imprime um espaçamento de tabulação (tab)
             //Serial.print(ypr[2] * 180/M_PI); // Imprime no Serial, o valor de Roll
-            Serial.print("Rotary Encoder: ");
+            //Serial.print("Rotary Encoder: ");
             Serial.println(counter, DEC);
         #endif // Encerra a Macro condição
    }
