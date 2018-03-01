@@ -6,15 +6,18 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 public class Arco {
-
-    private int x, y;
+	private int x, y;
     private Image imagem_acao, imagem1, imagem2, imagem1_cima, imagem2_cima;
     private int altura, largura;
     private boolean isVisible;
+    private int contador_forca = 0;
+    private int contador_pressionado = 0;
+    private int contador_cima = 0;
+    private int contador_pressionado_cima = 0;
 
     private List<Flecha> flechas;
 
-    private List<FlechaCima> flechas_cima;
+    private List<FlechaCima> flechas_cima;    
 
     public Arco(){
 
@@ -79,56 +82,72 @@ public class Arco {
     }
 
     public void atira(){
-        this.flechas.add(new Flecha(x + largura, y + altura/2));
+        this.flechas.add(new Flecha(x + largura, y + altura/2, contador_forca));
     }
     public void atiraCima(){
-        this.flechas_cima.add(new FlechaCima(x + largura, y + altura/2));
-    }
+        this.flechas_cima.add(new FlechaCima(x + largura, y + altura/2, contador_forca, contador_cima));
+    }    
 
     public void keyPressed(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 
-        if(codigo == KeyEvent.VK_UP){
-            imagem_acao = imagem1_cima;
-        }
+        if(codigo == KeyEvent.VK_UP){           
+           imagem_acao = imagem1_cima;
+           contador_pressionado_cima += 1;
+        }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
+            contador_pressionado_cima = 0;
         }
-
+        
+        if (codigo == KeyEvent.VK_SPACE) {
+        	contador_pressionado += 1;
+        }
+        
         if (imagem_acao == imagem1_cima) {
-            if (codigo == KeyEvent.VK_SPACE) {
-                imagem_acao = imagem2_cima;
-            }
+        	if (codigo == KeyEvent.VK_SPACE) {
+        		imagem_acao = imagem2_cima;        		
+            }        	
         }
-        else {
-            if (codigo == KeyEvent.VK_SPACE) {
-                imagem_acao = imagem2;
-            }
-        }
-
+        
+        if (imagem_acao == imagem1) {
+        	if(codigo == KeyEvent.VK_SPACE) {       		
+        		imagem_acao = imagem2;        		 
+        	}        	               
+        }        
     }
+
+    
     public void keyReleased(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 
         if(codigo == KeyEvent.VK_UP){
             imagem_acao = imagem1_cima;
-        }
+            contador_cima = contador_pressionado_cima;
+            System.out.println(contador_cima);
+        }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
+            contador_cima = contador_pressionado_cima;
         }
+        
+        if(imagem_acao == imagem2_cima) {
+        	if(codigo == KeyEvent.VK_SPACE) {        		
+        		contador_forca = contador_pressionado;
+        		atiraCima();
+        		imagem_acao = imagem1_cima;
+        		contador_pressionado = 0;
+        		contador_pressionado_cima = 0;
+        	}        	
+        }
+        if(imagem_acao == imagem2) {
+        	if(codigo == KeyEvent.VK_SPACE) {        		
+        		contador_forca = contador_pressionado;
+        		imagem_acao = imagem1;
+        		atira();        		
+        		contador_pressionado = 0;
+        	}    		        		       		
+    	}       
+    }  
 
-        if (imagem_acao == imagem2_cima) {
-            if (codigo == KeyEvent.VK_SPACE) {
-                atiraCima();
-                imagem_acao = imagem1_cima;
-
-            }
-        }
-        else {
-            if (codigo == KeyEvent.VK_SPACE) {
-                imagem_acao = imagem1;
-                atira();
-            }
-        }
-    }
 }

@@ -6,14 +6,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-
-public class Campo extends JPanel implements ActionListener{
-    private Image campo;
+public class Campo extends JPanel implements ActionListener {
+	
+	private Image campo;
     private Arco arco;
     private Timer timer;
-
-    public Campo(){
-        setFocusable(true);
+	
+	public Campo() {
+		setFocusable(true);
         setDoubleBuffered(true);
         addKeyListener(new TecladoAdapter());
 
@@ -24,9 +24,9 @@ public class Campo extends JPanel implements ActionListener{
 
         timer = new Timer(5, this);
         timer.start();
-
-    }
-    public void paint(Graphics g){
+	}
+	
+	public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
 
         graficos.drawImage(campo, 0, 0, null);
@@ -42,7 +42,7 @@ public class Campo extends JPanel implements ActionListener{
         List<FlechaCima> flechaCimas = arco.getFlechasCima();
         for(int i = 0; i < flechaCimas.size(); i++){
             FlechaCima fc = (FlechaCima) flechaCimas.get(i);
-            graficos.drawImage(fc.getImagem_2(), fc.getX(), fc.getY(), this);
+            graficos.drawImage(fc.getImagem(), fc.getX(), fc.getY(), this);
         }
 
         g.dispose();
@@ -67,7 +67,7 @@ public class Campo extends JPanel implements ActionListener{
         for(int i = 0; i < flechas.size(); i++){
             Flecha f = (Flecha) flechas.get(i);
             if(f.isVisible()){
-                f.mexer();
+                f.mexer();                
             }
             else{
                 flechas.remove(i);

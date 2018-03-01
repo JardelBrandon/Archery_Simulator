@@ -1,18 +1,19 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class gameContainer extends JFrame{
-
-    public gameContainer(){
+public class GameContainer extends JFrame{
+	
+	public GameContainer(){
         add(new Campo());
         setSize(1425,629);
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static void main(String[] args){
-        new gameContainer();
-    }
+	public static void main(String[] args) {		
+		new GameContainer();
+	}
+
 }
