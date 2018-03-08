@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Bowman;
 
 /**
  *
- * @author jarde
+ * @author a-haydar
  */
-public class NewClass {
-    public static int valor;
-    
-    public static void incrementa() {
-
-            valor++;
-
-    }
-    
+public enum Direction {
+    LEFT, RIGHT
 }
