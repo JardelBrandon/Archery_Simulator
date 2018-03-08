@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 public class Arco {
-    private int x, y;
+    private double x, y;
     private Image imagem_acao, imagem1, imagem2, imagem1_cima, imagem2_cima;
     private int altura, largura;
     private boolean isVisible;
@@ -55,10 +55,10 @@ public class Arco {
     public List<FlechaCima> getFlechasCima(){
         return flechas_cima;
     }
-    public int getX(){
+    public double getX(){
         return x;
     }
-    public int getY(){
+    public double getY(){
         return y;
     }
     public Image getImagem1(){
@@ -96,7 +96,9 @@ public class Arco {
 
         if(codigo == KeyEvent.VK_UP){           
            imagem_acao = imagem1_cima;
-           contador_pressionado_cima += Double.parseDouble(Protocolo.getGiroscopio());
+           if(Protocolo.getGiroscopio() != null){
+               contador_pressionado_cima += Double.parseDouble(Protocolo.getGiroscopio());
+           }
         }        
         if(codigo == KeyEvent.VK_DOWN && imagem_acao == imagem1_cima){
             imagem_acao = imagem1;
@@ -104,7 +106,9 @@ public class Arco {
         }
         
         if (codigo == KeyEvent.VK_SPACE) {
-        	contador_pressionado += Double.parseDouble(Protocolo.getRotaryEncoder());
+            if(Protocolo.getRotaryEncoder() != null){
+                contador_pressionado += Double.parseDouble(Protocolo.getRotaryEncoder());
+            }
                 System.out.println(Protocolo.getRotaryEncoder());
                 System.out.println(Protocolo.getGiroscopio());
         }

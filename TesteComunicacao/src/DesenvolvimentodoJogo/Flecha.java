@@ -6,7 +6,7 @@ import java.awt.*;
 public class Flecha {
 	
     private Image imagem, imagem2;
-    private int x, y;
+    private double x, y;
     private int altura, largura;
     //private int altura_baixo, largura_baixo;
     private boolean isVisible;
@@ -14,7 +14,7 @@ public class Flecha {
     private static final int ALTURA_TELA = 629;    
     private double contador_forca;       
 
-    public Flecha(int x, int y, double forca){
+    public Flecha(double x, double y, double forca){
 
         this.x = x;
         this.y = y;
@@ -57,10 +57,10 @@ public class Flecha {
     public Image getImagem2() {
     	return imagem2;
     }
-    public int getX(){
+    public double getX(){
         return x;
     }
-    public int getY(){
+    public double getY(){
         return y;
     }
     /*public int getContadorForca() {

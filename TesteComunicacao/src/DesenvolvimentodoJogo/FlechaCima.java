@@ -8,7 +8,7 @@ import java.awt.*;
 public class FlechaCima {
 	
     private Image imagem_cima, imagem_acao, imagem_baixo, imagem_meio;
-    private int x, y;    
+    private double x, y;    
     private int altura_cima, largura_cima;
     private boolean isVisibleCima;
     private static final int LARGURA_TELA = 1425;
@@ -19,7 +19,7 @@ public class FlechaCima {
     private static final int ALTURA_FIGURA = 196;    
     
 
-    public FlechaCima(int x, int y, double forca, double cima){
+    public FlechaCima(double x, double y, double forca, double cima){
     	//necessario para pegar as informacoes da posicao da imagem e do contador quando se aperta barra de espaco
         this.x = x;
         this.y = y;       
@@ -47,10 +47,10 @@ public class FlechaCima {
     public Image getImagem(){
         return imagem_acao;
     }
-    public int getX(){
+    public double getX(){
         return x;
     }
-    public int getY(){
+    public double getY(){
         return y;
     }   
     public boolean isVisibleCima(){
